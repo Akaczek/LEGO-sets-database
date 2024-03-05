@@ -1,5 +1,13 @@
-const App = () => {
-  return <h1>Hello World</h1>
-}
+import { AppWrapper } from './App.styles';
+import { LeftSidePanel, LegoList } from './components';
 
-export default App
+const App = () => {
+  return (
+    <AppWrapper>
+      <LeftSidePanel />
+      <LegoList />
+    </AppWrapper>
+  );
+};
+
+export default App;
