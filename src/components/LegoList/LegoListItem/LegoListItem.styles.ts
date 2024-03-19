@@ -14,7 +14,6 @@ export const LegoListItemImage = styled.img`
 `;
 
 export const LegoListItemValue = styled.div`
-  width: 100%;
   height: 100%;
   padding: 0 10px;
   display: flex;
@@ -22,7 +21,6 @@ export const LegoListItemValue = styled.div`
 `;
 
 export const LegoListItemLink = styled.a`
-  width: 100%;
   height: 100%;
   display: flex;
   align-items: center;

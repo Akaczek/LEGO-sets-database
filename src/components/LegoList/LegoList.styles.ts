@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const LegoListContainer = styled.div`
-  width: 100%;
+  width: calc(100vw - 100px);
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -17,7 +17,6 @@ export const LegoListHeader = styled.div`
 `;
 
 export const LegoListHeaderItem = styled.div`
-  width: 100%;
   height: 100%;
   padding: 0 10px;
   display: flex;
@@ -32,4 +31,38 @@ export const LegoListWrapper = styled.div`
   flex-direction: column;
   box-sizing: border-box;
   overflow-y: auto;
+`;
+
+export const PageChangeWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+`;
+
+export const PageChangeButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  box-sizing: border-box;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: ${( props ) => props.theme.color.white};
+  border: 1px solid ${( props ) => props.theme.color.black};
+
+  &:hover {
+    background-color: ${( props ) => props.theme.color.gray};
+  }
+`;
+
+export const PageChangeInput = styled.input`
+  padding: 5px;
+  width: 50px;
+  margin: 0 5px;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 5px;
+  text-align: center;
 `;

@@ -23,7 +23,7 @@ const LegoListItem: FC<LegoListItemProps> = ({ item }) => {
       <LegoListItemValue>{item.category}</LegoListItemValue>
       <LegoListItemValue>{parseInt(item.year.toString())}</LegoListItemValue>
       <LegoListItemValue>{parseInt(item.parts.toString())}</LegoListItemValue>
-      <LegoListItemLink>{item.set_link}</LegoListItemLink>
+      <LegoListItemLink href={`https://rebrickable.com${item.set_link}`} target='_blank'>Click here to see set</LegoListItemLink>
       <LegoListItemValue>{item.mean_price}</LegoListItemValue>
     </LegoListItemWrapper>
   );
