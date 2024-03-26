@@ -15,7 +15,14 @@ export const LegoItemsProvider: FC<{ children: ReactNode }> = ({
   const [legoItems, setLegoItems] = useState<LegoItem[]>([]);
 
   useEffect(() => {
-    axios.get(`${databaseURL}sets`).then((response) => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const page = parseInt(searchParams.get('page') || '1');
+    axios.get(`${databaseURL}sets`, {
+      params: {
+        limit: 10 * page,
+        offset: 10 * (page - 1),
+      },
+    }).then((response) => {
       setLegoItems(response.data);
     });
   }, []);

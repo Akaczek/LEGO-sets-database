@@ -14,10 +14,15 @@ import LegoListItem from './LegoListItem';
 
 const LegoList: FC = () => {
   const { legoItems, refetchLegoItems } = useContext(LegoItemsContext);
+  const searchParams = new URLSearchParams(window.location.search);
+  const page = parseInt(searchParams.get('page') || '1');
 
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(page);
 
   const handlePageChange = (page: number) => {
+    if (page < 1) return;
+    searchParams.set('page', page.toString());
+    window.history.pushState({}, '', `${window.location.pathname}?${searchParams}`);
     setCurrentPage(page);
     refetchLegoItems(10, page - 1);
   };

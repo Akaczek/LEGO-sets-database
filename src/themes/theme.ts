@@ -5,3 +5,9 @@ export const theme = {
     gray: '#f5f5f5',
   },
 }
+
+export type ThemeType = typeof theme;
+
+declare module 'styled-components' {
+  export interface DefaultTheme extends ThemeType {}
+}
