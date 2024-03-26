@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useContext } from 'react';
 
 import { LegoListItemProps } from './LegoListItem.types';
 import {
@@ -6,9 +6,14 @@ import {
   LegoListItemImage,
   LegoListItemValue,
   LegoListItemLink,
+  ButtonsWrapper,
+  Button,
 } from './LegoListItem.styles';
+import { LegoItemsContext } from '../../../utils/context/useLegoItems';
 
 const LegoListItem: FC<LegoListItemProps> = ({ item }) => {
+  const { deleteLegoItem } = useContext(LegoItemsContext);
+
   return (
     <LegoListItemWrapper>
       <LegoListItemValue>{item.id}</LegoListItemValue>
@@ -25,6 +30,14 @@ const LegoListItem: FC<LegoListItemProps> = ({ item }) => {
       <LegoListItemValue>{parseInt(item.parts.toString())}</LegoListItemValue>
       <LegoListItemLink href={`https://rebrickable.com${item.set_link}`} target='_blank'>Click here to see set</LegoListItemLink>
       <LegoListItemValue>{item.mean_price}</LegoListItemValue>
+      <ButtonsWrapper>
+        <Button>Edit</Button>
+        <Button
+          onClick={() => {
+            deleteLegoItem(item.id.toString());
+          }}
+        >Remove</Button>
+      </ButtonsWrapper>
     </LegoListItemWrapper>
   );
 };

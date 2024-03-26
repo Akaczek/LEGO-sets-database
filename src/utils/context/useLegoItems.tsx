@@ -6,8 +6,9 @@ import { LegoItem } from '../types/LegoItem';
 
 export const LegoItemsContext = createContext<{
   legoItems: LegoItem[];
-  refetchLegoItems: (limit: number, offset: number) => void;
-}>({ legoItems: [], refetchLegoItems: () => {} });
+  refetchLegoItems: () => void;
+  deleteLegoItem: (id: string) => void;
+}>({ legoItems: [], refetchLegoItems: () => {}, deleteLegoItem: () => {}});
 
 export const LegoItemsProvider: FC<{ children: ReactNode }> = ({
   children,
@@ -17,22 +18,28 @@ export const LegoItemsProvider: FC<{ children: ReactNode }> = ({
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
     const page = parseInt(searchParams.get('page') || '1');
+    const name = searchParams.get('name') || '';
     axios.get(`${databaseURL}sets`, {
       params: {
         limit: 10 * page,
         offset: 10 * (page - 1),
+        name: name,
       },
     }).then((response) => {
       setLegoItems(response.data);
     });
   }, []);
 
-  const refetchLegoItems = (limit: number, offset: number) => {
+  const refetchLegoItems = () => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const page = parseInt(searchParams.get('page') || '1');
+    const name = searchParams.get('name') || '';
     axios
       .get(`${databaseURL}sets`, {
         params: {
-          limit,
-          offset: offset * limit,
+          limit: 10 * page,
+          offset: 10 * (page - 1),
+          name: name,
         },
       })
       .then((response) => {
@@ -40,8 +47,14 @@ export const LegoItemsProvider: FC<{ children: ReactNode }> = ({
       });
   };
 
+  const deleteLegoItem = (id: string) => {
+    axios.delete(`${databaseURL}sets/${id}`).then(() => {
+      refetchLegoItems();
+    });
+  };
+
   return (
-    <LegoItemsContext.Provider value={{ legoItems, refetchLegoItems }}>
+    <LegoItemsContext.Provider value={{ legoItems, refetchLegoItems, deleteLegoItem }}>
       {children}
     </LegoItemsContext.Provider>
   );

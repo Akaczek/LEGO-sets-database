@@ -9,10 +9,10 @@ export const LegoListContainer = styled.div`
 `;
 
 export const LegoListHeader = styled.div`
-  width: 100%;
+  width: calc(100% - 15px);
   height: 100px;
   display: grid;
-  grid-template-columns: 0.5fr repeat(3, 1fr) repeat(2, 0.5fr) 1fr 0.5fr;
+  grid-template-columns: 0.5fr repeat(3, 1fr) repeat(2, 0.5fr) 1fr 0.5fr 0.5fr;
   box-sizing: border-box;
 `;
 
@@ -34,6 +34,7 @@ export const LegoListWrapper = styled.div`
 `;
 
 export const PageChangeWrapper = styled.div`
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -11,6 +11,7 @@ import {
 } from './LegoList.styles';
 import { LegoItemsContext } from '../../utils/context/useLegoItems';
 import LegoListItem from './LegoListItem';
+import Search from './Search';
 
 const LegoList: FC = () => {
   const { legoItems, refetchLegoItems } = useContext(LegoItemsContext);
@@ -24,7 +25,7 @@ const LegoList: FC = () => {
     searchParams.set('page', page.toString());
     window.history.pushState({}, '', `${window.location.pathname}?${searchParams}`);
     setCurrentPage(page);
-    refetchLegoItems(10, page - 1);
+    refetchLegoItems();
   };
 
   return (
@@ -45,6 +46,7 @@ const LegoList: FC = () => {
         ))}
       </LegoListWrapper>
       <PageChangeWrapper>
+        <Search />
         <PageChangeButton onClick={() => handlePageChange(currentPage - 1)}>
           Prev
         </PageChangeButton>
@@ -53,10 +55,10 @@ const LegoList: FC = () => {
           type='number'
           min={1}
           onChange={(e) => setCurrentPage(Number(e.target.value))}
-          onBlur={() => refetchLegoItems(10, currentPage - 1)}
+          onBlur={() => refetchLegoItems()}
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
-              refetchLegoItems(10, currentPage - 1);
+              refetchLegoItems();
             }
           }}
         />
