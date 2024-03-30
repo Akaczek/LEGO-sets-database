@@ -9,11 +9,13 @@ export const LegoItemsContext = createContext<{
   refetchLegoItems: () => void;
   deleteLegoItem: (id: string) => void;
   addLegoItem: (legoItem: LegoItem) => void;
+  editLegoItem: (legoItem: LegoItem) => void;
 }>({
   legoItems: [],
   refetchLegoItems: () => {},
   deleteLegoItem: () => {},
   addLegoItem: () => {},
+  editLegoItem: () => {},
 });
 
 export const LegoItemsProvider: FC<{ children: ReactNode }> = ({
@@ -67,9 +69,21 @@ export const LegoItemsProvider: FC<{ children: ReactNode }> = ({
     });
   };
 
+  const editLegoItem = (legoItem: LegoItem) => {
+    axios.put(`${databaseURL}sets/${legoItem.id}`, { ...legoItem }).then(() => {
+      refetchLegoItems();
+    });
+  }
+
   return (
     <LegoItemsContext.Provider
-      value={{ legoItems, refetchLegoItems, deleteLegoItem, addLegoItem }}
+      value={{ 
+        legoItems, 
+        refetchLegoItems, 
+        deleteLegoItem, 
+        addLegoItem,
+        editLegoItem,
+      }}
     >
       {children}
     </LegoItemsContext.Provider>

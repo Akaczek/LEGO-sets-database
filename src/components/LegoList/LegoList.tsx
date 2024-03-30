@@ -10,14 +10,14 @@ import {
   PageChangeInput,
 } from './LegoList.styles';
 import { LegoItemsContext } from '../../utils/context/useLegoItems';
-import { ModalContext } from '../../utils/context/useModal';
+import { AddModalContext } from '../../utils/context/useAddModal';
 import LegoListItem from './LegoListItem';
 import Search from './Search';
 import AddEditModal from '../AddEditModal';
 
 const LegoList: FC = () => {
   const { legoItems, refetchLegoItems } = useContext(LegoItemsContext);
-  const { isModalOpen } = useContext(ModalContext);
+  const { isAddModalOpen } = useContext(AddModalContext);
   const searchParams = new URLSearchParams(window.location.search);
   const page = parseInt(searchParams.get('page') || '1');
 
@@ -33,7 +33,7 @@ const LegoList: FC = () => {
 
   return (
     <LegoListContainer>
-      {isModalOpen && <AddEditModal
+      {isAddModalOpen && <AddEditModal
         modalType='add'
       />}
       <LegoListHeader>

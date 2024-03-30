@@ -1,7 +1,7 @@
 import { FC, useContext } from 'react';
 
 import { LEGO_logo, add_icon } from '../../assets';
-import { ModalContext } from '../../utils/context/useModal';
+import { AddModalContext } from '../../utils/context/useAddModal';
 import {
   LeftSidePanelWrapper,
   LeftSidePanelLogo,
@@ -10,12 +10,12 @@ import {
 } from './LeftSidePanel.styles';
 
 const LeftSidePanel: FC = () => {
-  const { openModal } = useContext(ModalContext);
+  const { openAddModal } = useContext(AddModalContext);
 
   return (
     <LeftSidePanelWrapper>
       <LeftSidePanelLogo src={LEGO_logo} alt='LEGO logo' />
-      <LeftSidePanelButton onClick={openModal}>
+      <LeftSidePanelButton onClick={openAddModal}>
         <LeftSidePanelButtonIcon src={add_icon} alt='Add icon' />
       </LeftSidePanelButton>
     </LeftSidePanelWrapper>

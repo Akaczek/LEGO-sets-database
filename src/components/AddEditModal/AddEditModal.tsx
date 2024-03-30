@@ -9,12 +9,16 @@ import {
   Button,
 } from './AddEditModal.styles';
 import { AddEditModalProps } from './AddEditModal.types';
-import { ModalContext } from '../../utils/context/useModal';
+import { AddModalContext } from '../../utils/context/useAddModal';
 import { LegoItemsContext } from '../../utils/context/useLegoItems';
 
-const AddEditModal: FC<AddEditModalProps> = ({ legoItem, modalType }) => {
-  const { closeModal } = useContext(ModalContext);
-  const { addLegoItem } = useContext(LegoItemsContext);
+const AddEditModal: FC<AddEditModalProps> = ({
+  legoItem,
+  modalType,
+  closeEditModal,
+}) => {
+  const { closeAddModal } = useContext(AddModalContext);
+  const { addLegoItem, editLegoItem } = useContext(LegoItemsContext);
   const [id, setId] = useState(legoItem?.id || 0);
   const [name, setName] = useState(legoItem?.name || '');
   const [category, setCategory] = useState(legoItem?.category || '');
@@ -35,14 +39,34 @@ const AddEditModal: FC<AddEditModalProps> = ({ legoItem, modalType }) => {
       set_link: setLink,
       mean_price: meanPrice,
     });
-    closeModal();
-  }
+    closeAddModal();
+  };
+
+  const handleEdit = () => {
+    editLegoItem({
+      id,
+      name,
+      category,
+      year,
+      parts,
+      img_link: imgLink,
+      set_link: setLink,
+      mean_price: meanPrice,
+    });
+    if (closeEditModal) {
+      closeEditModal();
+    }
+  };
 
   return (
     <ModalOverlay
       onClick={(e) => {
         if (e.target === e.currentTarget) {
-          closeModal();
+          closeAddModal();
+
+          if (closeEditModal) {
+            closeEditModal();
+          }
         }
       }}
     >
@@ -72,12 +96,14 @@ const AddEditModal: FC<AddEditModalProps> = ({ legoItem, modalType }) => {
         <Input
           type='number'
           value={year}
+          step={1}
           onChange={(e) => setYear(Number(e.target.value))}
         />
         <Label>Parts:</Label>
         <Input
           type='number'
           value={parts}
+          step={1}
           onChange={(e) => setParts(Number(e.target.value))}
         />
         <Label>Image Link:</Label>
@@ -98,7 +124,7 @@ const AddEditModal: FC<AddEditModalProps> = ({ legoItem, modalType }) => {
           value={meanPrice}
           onChange={(e) => setMeanPrice(Number(e.target.value))}
         />
-        <Button onClick={handleAdd}>
+        <Button onClick={modalType === 'add' ? handleAdd : handleEdit}>
           {modalType === 'add' ? 'Add' : 'Edit'}
         </Button>
       </ModalContainer>
